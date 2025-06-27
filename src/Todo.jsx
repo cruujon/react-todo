@@ -1,6 +1,6 @@
 import "./styles.css";
 
-export const App = () => {
+export const Todo = () => {
   return (
     <div className="App">
       <h1>Hello CodeSandbox</h1>
