@@ -4,12 +4,10 @@ import "./styles.css";
 export const Todo = () => {
   const [todoText, setTodoText] = useState("");
   const [incompleteTodos, setIncompleteTodos] = useState([
-    "TODOです1",
-    "TODOです2",
+
   ]);
   const [completeTodos, setCompleteTodos] = useState([
-    "TODOでした1",
-    "TODOでした2",
+ 
   ]);
   const onChangeTodoText = (event) => {
     setTodoText(event.target.value);
@@ -28,6 +26,27 @@ export const Todo = () => {
     setIncompleteTodos(newTodos);
   };
 
+  const onClickComplete = (index) => {
+    const newIncompleteTodos = [...incompleteTodos];
+    newIncompleteTodos.splice(index, 1);
+
+    const newCompleteTodos = [...completeTodos, incompleteTodos[index]];
+
+    setCompleteTodos(newCompleteTodos)
+    setIncompleteTodos(newIncompleteTodos)
+
+  }
+
+  const onClickBack = (index) => {
+    const newCompleteTodos = [...completeTodos];
+    newCompleteTodos.splice(index, 1);
+
+    const newIncompleteTodos = [...incompleteTodos, completeTodos[index]];
+
+    setCompleteTodos(newCompleteTodos)
+    setIncompleteTodos(newIncompleteTodos)
+  }
+
   return (
     <>
       <div className="input-area">
@@ -41,7 +60,7 @@ export const Todo = () => {
             <li key={todo}>
               <div className="list-row">
                 <p className="todo-item ">{todo}</p>
-                <button>完了</button>
+                <button onClick={() => onClickComplete(index)}>完了</button>
                 <button onClick={() => onClickDelete(index)}>削除</button>
               </div>
             </li>
@@ -51,12 +70,11 @@ export const Todo = () => {
       <div className="complete-area">
         <p className="title">完了のTODO</p>
         <ul>
-          {completeTodos.map((todo) => (
+          {completeTodos.map((todo, index) => (
             <li key={todo}>
               <div className="list-row">
                 <p className="todo-item ">{todo}</p>
-                <button>完了</button>
-                <button>削除</button>
+                <button onClick={() => onClickBack(index)}>戻す</button>
               </div>
             </li>
           ))}
